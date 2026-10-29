@@ -25,12 +25,12 @@ try {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => window.deck?.isReady());
   const slideCount = await page.locator('.reveal .slides > section').count();
-  if (slideCount !== 11) failures.push(`Expected 11 slides, found ${slideCount}`);
+  if (slideCount !== 14) failures.push(`Expected 14 slides, found ${slideCount}`);
 
   for (const viewport of [{ width: 1280, height: 720 }, { width: 1920, height: 1080 }, { width: 2560, height: 1440 }]) {
     await page.setViewportSize(viewport);
     await page.waitForTimeout(180);
-    for (let index = 0; index < 11; index++) {
+    for (let index = 0; index < 14; index++) {
       await page.evaluate(i => window.deck.slide(i, 0, 99), index);
       await page.waitForTimeout(900);
       const state = await page.evaluate(() => {
@@ -60,7 +60,7 @@ try {
     await page.screenshot({ path: `screenshots/slide-4-step-${String(step).padStart(2, '0')}.png` });
   }
 
-  for (let slide = 0; slide < 11; slide++) {
+  for (let slide = 0; slide < 14; slide++) {
     await page.evaluate(i => window.deck.slide(i, 0, -1), slide);
     await page.waitForTimeout(350);
     const before = await page.evaluate(() => window.deck.getIndices());
@@ -109,7 +109,7 @@ try {
   if (fallback !== 'css') failures.push(`WebKit did not select the CSS glass fallback: ${fallback}`);
   for (const viewport of [{ width: 1280, height: 720 }, { width: 1920, height: 1080 }, { width: 2560, height: 1440 }]) {
     await safariPage.setViewportSize(viewport);
-    for (let index = 0; index < 11; index++) {
+    for (let index = 0; index < 14; index++) {
       await safariPage.evaluate(i => window.deck.slide(i, 0, 99), index);
       await safariPage.waitForTimeout(400);
       if (!await safariPage.locator('.reveal .slides > section.present').count()) failures.push(`WebKit did not show slide ${index + 1}`);
@@ -122,7 +122,7 @@ try {
   await safariBrowser.close();
 
   if (failures.length) throw new Error(`Presentation checks failed:\n- ${failures.join('\n- ')}`);
-  console.log('Verified 11 slides in Chromium and WebKit at 1280×720, 1920×1080 and 2560×1440; fragment navigation, reduced motion, assets, local requests, overflow, CSS glass fallback and Speaker View passed. Screenshots refreshed.');
+  console.log('Verified 14 slides in Chromium and WebKit at 1280×720, 1920×1080 and 2560×1440; fragment navigation, reduced motion, assets, local requests, overflow, CSS glass fallback and Speaker View passed. Screenshots refreshed.');
 } finally {
   await browser?.close();
   if (server.exitCode === null) {

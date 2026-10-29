@@ -95,10 +95,10 @@ html,body{background:#080d18}
 .result-list{font-size:27px;width:900px}
 .result-list p{border-bottom:1px solid #ffffff25;padding:13px 0;margin:0}
 .result-list span{float:right;color:#86beff}
-.final-brand{text-align:center;width:460px}
-.final-brand .icon{display:block;margin:auto;width:170px}
-.qr{width:150px;background:white;padding:8px;border-radius:10px;display:block;margin:17px auto}
-.final-brand a{font-size:19px;color:#a8d4ff}
+.final-brand{text-align:center;width:600px}
+.final-brand .icon{display:block;margin:auto;width:255px}
+.qr{width:225px;background:white;padding:12px;border-radius:15px;display:block;margin:25px auto}
+.final-brand a{font-size:27px;color:#a8d4ff}
 .thanks{font-size:42px;color:#afd7ff;margin-top:27px}
 .reveal .progress{color:#74bbff;height:3px}
 .lg-host{--lg-tint:rgb(168 208 250 / .13);--lg-solid:#182b40;color:var(--ink)}
@@ -230,8 +230,8 @@ html,body,.reveal,.reveal .slides section{background:#e5e6e1}
 .library-interface.is-expanded .callouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:0 24px;min-width:0}
 .library-interface.is-expanded .callout{font-size:20px;padding:8px 0}
 .library-interface.is-expanded .settings-screen{position:relative;grid-area:settings;display:flex;flex-direction:column;align-items:center;justify-content:center;width:auto;height:100%;min-height:0;padding:20px;overflow:hidden;border:1px solid #3a44441c;border-radius:26px;background:#f9f9f9;box-shadow:0 8px 22px #3a444414}
-.settings-screen img{display:block;width:100%;height:calc(100% - 42px);min-height:0;object-fit:contain}
-.settings-screen small{display:block;flex:none;color:#636363;font-size:16px;padding:8px}
+.settings-screen img{display:block;width:100%;height:calc(100% - 52px);min-height:0;object-fit:contain}
+.settings-screen small{display:block;flex:none;color:#636363;font-size:24px;line-height:1.2;padding:8px}
 .search-interface .screen{width:820px;height:auto;aspect-ratio:1914/1448}
 .search-interface .screen img{object-fit:contain}
 .search-interface .callout{font-size:30px}
@@ -251,6 +251,16 @@ html,body,.reveal,.reveal .slides section{background:#e5e6e1}
 .dark-screens figure{margin:0;min-width:0}
 .dark-screens img{display:block;width:100%;height:auto;aspect-ratio:1914/1448;object-fit:contain;border-radius:20px}
 .dark-screens figcaption{color:#c7c7c7;font-size:24px;margin-top:12px}
+.windows-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(350px,.75fr);align-items:center;gap:42px;margin-top:36px}
+.windows-shot{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 20px 60px #0006}
+.windows-copy{color:#c7c7c7;font-size:25px;line-height:1.45}
+.windows-copy p{margin:0 0 24px}
+.windows-copy .windows-lead{font-size:34px;color:#f5f5f5;line-height:1.2}
+.release-shot{display:block;width:min(100%,1320px);max-height:720px;height:auto;object-fit:contain;margin:30px auto 0;border-radius:14px;box-shadow:0 20px 60px #0007}
+.handwriting-examples{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:center;margin-top:24px}
+.handwriting-item{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;height:700px;margin:0}
+.handwriting-item img{display:block;width:auto;height:auto;max-width:100%;max-height:620px;object-fit:contain;border-radius:12px;box-shadow:0 12px 32px #0003}
+.handwriting-item figcaption{margin-top:16px;color:#636363;font-size:27px;text-align:center}
 .welcome-stage{position:relative;width:900px;max-width:100%;aspect-ratio:1914/1448;margin:28px auto 0;transform-origin:center}
 .reveal .welcome-stage .welcome-frame{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;object-fit:contain}
 .reveal .welcome-stage .welcome-frame.fragment{visibility:visible;opacity:0;transition:opacity var(--motion-duration) var(--motion-ease)}

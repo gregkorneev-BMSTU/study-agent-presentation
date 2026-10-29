@@ -32,7 +32,7 @@ try {
   browser = await chromium.launch({ ...(executablePath ? { executablePath } : {}), headless: true });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   await page.goto(`${url}/?print-pdf`, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => document.querySelectorAll('.reveal .slides > section, .reveal .slides > .pdf-page').length === 11 && document.querySelector('.reveal.ready'));
+  await page.waitForFunction(() => document.querySelectorAll('.reveal .slides > section, .reveal .slides > .pdf-page').length === 14 && document.querySelector('.reveal.ready'));
   await page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all([...document.images].map(image => image.decode().catch(() => {})));
@@ -78,7 +78,7 @@ try {
   });
   const pdf = await PDFDocument.load(await readFile('study-agent-presentation.pdf'));
   const pages = pdf.getPageCount();
-  if (pages !== 11) throw new Error(`Expected 11 PDF pages, got ${pages}`);
+  if (pages !== 14) throw new Error(`Expected 14 PDF pages, got ${pages}`);
   console.log(`Exported study-agent-presentation.pdf (${pages} pages)`);
 } finally {
   await browser?.close();
