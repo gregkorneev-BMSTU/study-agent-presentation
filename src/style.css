@@ -23,7 +23,7 @@ html,body{background:#080d18}
 .team-grid,.challenges{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:54px}
 .team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .team-grid .card:first-child{grid-column:1 / -1}
-.team-grid .card{text-align:center}
+.team-grid .card{text-align:left}
 .card,.node,.file,.solution,.screen,.settings,.tech-center{background:linear-gradient(135deg,#b7d8ff16,#8ab7ef09);border:1px solid #c1deff37;border-radius:24px;box-shadow:inset 0 1px #ffffff22,0 18px 52px #0003}
 .card{padding:26px;min-height:160px}
 .card strong,.node strong{display:block;font-size:25px}
@@ -132,7 +132,9 @@ html,body{background:#e8e8e2}
 .team-grid .card:nth-child(3){background:#cbd5c2}
 .team-grid .card:nth-child(4){background:#dfc2bc}
 .team-grid .card:nth-child(5){background:#bdcce1}
-.team-grid .card{padding:30px 26px;min-height:178px}
+.team-grid .card{display:flex;align-items:center;justify-content:flex-start;gap:30px;padding:24px 30px;min-height:220px}
+.team-avatar{width:150px;height:150px;flex:none;object-fit:cover;border-radius:50%;background:#f2e0d0;box-shadow:0 5px 15px #20211f20}
+.team-info{min-width:0}
 .team-grid .card strong{font-size:32px;line-height:1.18}
 .team-grid .card small{font-size:25px;line-height:1.42;margin-top:14px}
 .card strong,.card small,.node strong,.node small,.solution strong,.solution small{color:#20211f}
