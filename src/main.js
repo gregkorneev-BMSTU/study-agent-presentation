@@ -23,7 +23,7 @@ const packet = (stage, path) => `<circle class="arch-packet" data-stage="${stage
 const architecture = `<div class="architecture" data-architecture>
   <div class="arch-phase-head"><span><i>01</i> Подготовка материалов</span><span><i>02</i> Поиск и ответ</span></div>
   <svg class="arch-svg" viewBox="0 0 1720 500" role="img" aria-label="Схема подготовки учебных материалов и поиска с локальной генерацией ответа">
-    <defs><linearGradient id="nodeFill" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".98"/><stop offset="1" stop-color="#f2e0d0" stop-opacity=".58"/></linearGradient><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="20" refX="24" refY="10" orient="auto"><path d="M1 1 L24 10 L1 19"/></marker></defs>
+    <defs><linearGradient id="nodeFill" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".98"/><stop offset="1" stop-color="#e5e6e1" stop-opacity=".58"/></linearGradient><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="20" refX="24" refY="10" orient="auto"><path d="M1 1 L24 10 L1 19"/></marker></defs>
     ${edge('e-doc-extract', 2, 'M290 115 H350')}
     ${edge('e-extract-chunk', 4, 'M610 115 H670')}
     ${edge('e-extract-ocr', 3, 'M480 170 V230')}
@@ -54,12 +54,12 @@ const architecture = `<div class="architecture" data-architecture>
 
 document.querySelector('#slides').innerHTML = `
 <section class="cover"><div class="cover-glow"></div><div class="cover-content glass-hero">${icon}<h1>Study Agent</h1><p>Локальный интеллектуальный агент<br>для поиска и анализа учебных материалов</p><div class="university">МГТУ им. Н. Э. Баумана</div></div><div class="page">01 / 09</div>${note}</section>
-${section(2, 'ЛЮДИ', 'Команда разработки', `<p class="lead">Участники проекта</p><div class="team-grid">${team.map(p => `<div class="card glass-card team-member"><img class="team-avatar" src="${A}${p.avatar}" alt="Аватар: ${p.fullName}"><div class="team-info"><strong>${p.fullName}</strong><small>@${p.github}<br>Группа: ${p.academicGroup}<br>Роль: ${p.role}</small></div></div>`).join('')}</div>`)}
-${section(3, 'ЗАДАЧА', 'Учебные материалы есть.<br><em>Найти нужное — сложно.</em>', `<div class="problem"><div class="file-cloud">${['PDF', 'DOCX', 'MD', 'TXT', 'Изображения'].map((x, i) => `<div class="file glass-pill fragment" data-fragment-index="${i}">${x}</div>`).join('')}</div><div class="problem-arrow fragment" data-fragment-index="5">→</div><div class="solution glass-spotlight fragment" data-fragment-index="5">${icon}<strong>Единая локальная библиотека</strong><small>Материалы из разных папок</small></div></div><p class="conclusion fragment" data-fragment-index="6">Поиск по тексту и смыслу. Ответы — по найденным материалам.</p><p class="footnote">Источники помогают проверить ответ, но не гарантируют фактическую истинность текста модели.</p>`)}
+${section(2, 'ЛЮДИ', 'Команда разработки', `<p class="lead">Участники проекта</p><div class="team-grid">${team.map(p => `<div class="card glass-card team-member"><img class="team-avatar" src="${A}${p.avatar}" alt="Аватар: ${p.fullName}"><div class="team-info"><strong>${p.fullName}</strong><small>@${p.github}<br>Группа: ${p.academicGroup}<br>Роль: ${p.github === 'gregkorneev' ? p.role.replace(', ', ',<br>') : p.role}</small></div></div>`).join('')}</div>`)}
+${section(3, 'ЗАДАЧА', 'Учебные материалы есть.<br><em>Найти нужное — сложно.</em>', `<div class="problem"><div class="file-cloud">${['PDF', 'DOCX', 'MD', 'TXT', 'Изображения'].map(x => `<div class="file glass-pill">${x}</div>`).join('')}</div><div class="problem-arrow fragment" data-fragment-index="1">→</div><div class="solution glass-spotlight fragment" data-fragment-index="1">${icon}<strong>Единая локальная библиотека</strong><small>Материалы из разных папок</small></div></div><p class="conclusion fragment" data-fragment-index="1">Поиск по тексту и смыслу. Ответы — по найденным материалам.</p><p class="footnote">Источники помогают проверить ответ, но не гарантируют фактическую истинность текста модели.</p>`)}
 ${section(4, 'АРХИТЕКТУРА', 'От документа к ответу', architecture)}
 ${section(5, 'СТЕК', 'Технологический стек', `<div class="tech-layout"><div class="tech-center glass-hero">${icon}<strong>Study Agent</strong></div><div class="tech-grid">${[['Python','Локальный backend'],['SQLite · FTS5','Локальный индекс'],['Embeddings','Семантический поиск'],['Ollama','Локальная LLM'],['Chandra OCR','Распознавание по настройке'],['SwiftUI','Поддерживаемое приложение macOS'],['WinUI 3','Beta 6.1 · предварительная версия'],['GitHub Actions','Автоматизированные проверки']].map((x,i)=>card(x[0],x[1],i)).join('')}</div></div>`)}
 ${section(6, 'РАЗРАБОТКА', 'От концепции к работающему приложению', `<div class="timeline">${['Основа и интерфейс','SA-01<br>Индекс','SA-02<br>DOCX / OCR','SA-03<br>Поиск / RAG','SA-04<br>Источники','SA-05 / SA-06<br>Windows / релизы'].map((x,i)=>`<div class="milestone fragment" data-fragment-index="${i}"><i></i><strong>${x}</strong></div>`).join('')}</div><div class="challenges">${[['PDF и OCR','Chandra подключается отдельно и распознаёт визуальный текст при необходимости.'],['Инкрементальная индексация','Неизменённые документы не извлекаются повторно при синхронизации.'],['Проверяемые источники','Ссылки строятся по метаданным найденных фрагментов; модель может ошибаться.'],['Упаковка','Python backend и нативный интерфейс интегрируются отдельно для платформ.']].map((x,i)=>card(x[0],x[1],i+2)).join('')}</div>`)}
-${section(7, 'ИНТЕРФЕЙС', 'Библиотека учебных материалов', `<div class="interface"><div class="screen glass-spotlight"><img src="${A}macos-beta-6.1-library.png" alt="Настоящий экран библиотеки Study Agent"></div><div class="callouts">${[['01','Подключение папок'],['02','Прогресс индексации'],['03','Документы и фрагменты'],['04','Статусы и предупреждения']].map((x,i)=>`<div class="callout fragment" data-fragment-index="${i}"><b>${x[0]}</b> ${x[1]}</div>`).join('')}<div class="settings glass-card fragment" data-fragment-index="4"><img src="${A}macos-beta-6.1-settings.png" alt="Настройки Study Agent"><small>Локальная модель и OCR</small></div></div></div>`)}
+${section(7, 'ИНТЕРФЕЙС', 'Библиотека учебных материалов', `<div class="interface library-interface"><div class="screen glass-spotlight"><img src="${A}macos-beta-6.1-library.png" alt="Настоящий экран библиотеки Study Agent"></div><div class="callouts">${[['01','Подключение папок'],['02','Прогресс индексации'],['03','Документы и фрагменты'],['04','Статусы и предупреждения']].map((x,i)=>`<div class="callout fragment" data-fragment-index="${i}"><b>${x[0]}</b> ${x[1]}</div>`).join('')}</div><div class="settings-screen glass-card fragment" data-fragment-index="4"><img src="${A}macos-beta-6.1-settings.png" alt="Настройки Study Agent"><small>Локальная модель и OCR</small></div></div>`)}
 ${section(8, 'ИНТЕРФЕЙС', 'От вопроса к ответу по источникам', `<div class="interface"><div class="screen glass-spotlight"><img src="${A}macos-beta-6.1-search.png" alt="Настоящий экран поиска Study Agent"></div><div class="callouts">${[['01','Раздел «Поиск»'],['02','Поле вопроса'],['03','Кнопка запуска запроса']].map((x,i)=>`<div class="callout fragment" data-fragment-index="${i}"><b>${x[0]}</b> ${x[1]}</div>`).join('')}<p class="workflow-note">После запроса приложение показывает найденные фрагменты и ответ локальной модели.</p><p class="footnote">На снимке — начальное состояние до запроса. Поиск доступен и без генерации; модель может ошибаться.</p></div></div>`)}
 ${section(9, 'РЕЗУЛЬТАТ', 'Study Agent', `<div class="final"><div><p class="lead">Локальная работа с учебными материалами</p><div class="result-list"><p>Документы и OCR <span>↗</span></p><p>Локальный индекс и поиск <span>↗</span></p><p>Ответы модели с источниками <span>↗</span></p><p>Приложение для macOS <span>↗</span></p></div><p class="footnote">Windows: Beta 6.1 — предварительный выпуск, приёмка продолжается.</p></div><div class="final-brand">${icon}<img class="qr" src="${A}github-qr.svg" alt="QR-код репозитория"><a href="https://github.com/gregkorneev-BMSTU/study-agent">github.com/gregkorneev-BMSTU/study-agent</a></div></div><div class="thanks fragment">Спасибо за внимание!</div>`)}
 `;
@@ -88,26 +88,31 @@ function updateArchitecture() {
   architectureRoot.querySelector('.arch-step-label').textContent = archCaptions[count];
 }
 
-function setProblemGathered(slide, animate = false) {
-  const solution = slide.querySelector('.solution');
-  const gathered = solution.classList.contains('visible');
-  const files = [...slide.querySelectorAll('.file')];
-  if (!gathered) {
-    gsap.set(files, { clearProps: 'transform,opacity' });
-    return;
-  }
-  const target = solution.getBoundingClientRect();
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  files.forEach(file => {
-    const from = file.getBoundingClientRect();
-    gsap.to(file, {
-      x: target.left + target.width / 2 - (from.left + from.width / 2),
-      y: target.top + target.height / 2 - (from.top + from.height / 2),
-      scale: 0.12, autoAlpha: 0.18, duration: animate && !reduced ? 0.58 : 0,
-      delay: animate && !reduced ? Number(file.dataset.fragmentIndex) * 0.055 : 0,
-      ease: 'power2.inOut', overwrite: true,
-    });
+function animateLibraryLayout(interfaceElement, expanded) {
+  const moving = [...interfaceElement.querySelectorAll('.screen,.callouts')];
+  const before = moving.map(element => element.getBoundingClientRect());
+  interfaceElement.classList.toggle('is-expanded', expanded);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+  const after = moving.map(element => element.getBoundingClientRect());
+  const timeline = gsap.timeline();
+  moving.forEach((element, index) => {
+    const from = before[index];
+    const to = after[index];
+    timeline.fromTo(element, {
+      x: from.left - to.left, y: from.top - to.top,
+      scaleX: from.width / to.width, scaleY: from.height / to.height,
+      transformOrigin: 'top left',
+    }, {
+      x: 0, y: 0, scaleX: 1, scaleY: 1,
+      duration: 0.7, ease: 'power2.inOut', clearProps: 'transform',
+    }, 0);
   });
+  if (expanded) {
+    timeline.fromTo(interfaceElement.querySelector('.settings-screen'),
+      { autoAlpha: 0, y: 16 },
+      { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.inOut' }, 0);
+  }
+  return timeline;
 }
 
 for (const element of document.querySelectorAll('.glass-hero,.glass-spotlight,.settings')) {
@@ -116,24 +121,44 @@ for (const element of document.querySelectorAll('.glass-hero,.glass-spotlight,.s
 }
 deck.on('fragmentshown', event => {
   if (event.fragment.closest('[data-architecture]')) updateArchitecture();
-  if (event.fragment.closest('.problem') && event.fragment.matches('.solution')) setProblemGathered(event.fragment.closest('section'), true);
   if (event.fragment.matches('.callout')) event.fragment.closest('section').querySelector('.screen').dataset.focus = event.fragment.dataset.fragmentIndex;
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (event.fragment.matches('.settings-screen')) {
     activeAnimation?.kill();
-    activeAnimation = gsap.fromTo(event.fragment, { y: 16, scale: 0.985 }, { y: 0, scale: 1, duration: 0.42, ease: 'power2.out', clearProps: 'transform' });
+    const interfaceElement = event.fragment.closest('.interface');
+    activeAnimation = animateLibraryLayout(interfaceElement, true);
+    return;
+  }
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const fragmentIndex = event.fragment.dataset.fragmentIndex;
+    const group = event.fragment.closest('section').querySelector('.problem')
+      ? [...event.fragment.closest('section').querySelectorAll('.fragment')].filter(fragment => fragment.dataset.fragmentIndex === fragmentIndex)
+      : [event.fragment];
+    if (group[0] !== event.fragment) return;
+    activeAnimation?.kill();
+    activeAnimation = gsap.fromTo(group, { y: 16, scale: 0.985 }, { y: 0, scale: 1, duration: 0.42, ease: 'power2.out', clearProps: 'transform' });
   }
 });
 deck.on('fragmenthidden', event => {
   if (event.fragment.closest('[data-architecture]')) updateArchitecture();
-  if (event.fragment.matches('.solution')) setProblemGathered(event.fragment.closest('section'), false);
+  if (event.fragment.matches('.settings-screen')) {
+    activeAnimation?.kill();
+    activeAnimation = animateLibraryLayout(event.fragment.closest('.interface'), false);
+  }
 });
 deck.on('slidechanged', event => {
   activeAnimation?.kill();
   gsap.set('.fragment', { clearProps: 'transform' });
   document.querySelectorAll('.screen').forEach(screen => delete screen.dataset.focus);
-  if (event.currentSlide?.querySelector('.problem')) setProblemGathered(event.currentSlide, false);
   if (event.previousSlide?.matches('.cover')) {
     gsap.set('.cover-content', { clearProps: 'all' });
+  }
+  if (event.currentSlide?.querySelector('.problem') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    activeAnimation = gsap.fromTo(event.currentSlide.querySelectorAll('.file'), { y: 16, scale: 0.985 }, { y: 0, scale: 1, duration: 0.42, ease: 'power2.out', clearProps: 'transform' });
+  }
+  if (event.currentSlide?.querySelector('.team-grid') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    activeAnimation = gsap.fromTo(event.currentSlide.querySelectorAll('.team-grid .card'),
+      { autoAlpha: 0, y: 20, scale: 0.985 },
+      { autoAlpha: 1, y: 0, scale: 1, duration: 0.42, stagger: 0.14, ease: 'power2.out', clearProps: 'transform,opacity,visibility' });
   }
   if (event.currentSlide?.querySelector('[data-architecture]')) updateArchitecture();
 });

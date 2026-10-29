@@ -36,24 +36,30 @@ try {
   await page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all([...document.images].map(image => image.decode().catch(() => {})));
+    document.querySelector('.library-interface')?.classList.add('is-expanded');
     window.deck?.layout();
   });
   await page.addStyleTag({ content: `
     @media print {
       html.print-pdf .reveal-viewport,
-      html.print-pdf .reveal { background: #e8e8e2 !important; }
+      html.print-pdf .reveal { background: #e5e6e1 !important; }
       html.print-pdf .reveal .slides section {
         left: 0 !important;
         width: 100% !important;
         height: 1122px !important;
         padding: 72px 100px !important;
-        background: #e8e8e2 !important;
+        background: #e5e6e1 !important;
+      }
+      html.print-pdf .cover-content > * {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
       }
       html.print-pdf .reveal h2 {
-        color: #f4f8ff !important;
-        font-size: 68px !important;
-        line-height: 1.08 !important;
-        letter-spacing: -.045em !important;
+        color: #20211f !important;
+        font-size: 72px !important;
+        line-height: 1.03 !important;
+        letter-spacing: -.055em !important;
       }
     }
   ` });
