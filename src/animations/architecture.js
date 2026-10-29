@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { MOTION_DURATION, MOTION_EASE } from './timing.js';
 
 export function createArchitectureAnimation(root) {
   const paths = [...root.querySelectorAll('.arch-edge')];
@@ -19,10 +20,10 @@ export function createArchitectureAnimation(root) {
 
   for (let stage = 1; stage <= 10; stage++) {
     timeline.to(nodes.filter(node => Number(node.dataset.stage) === stage), {
-      autoAlpha: 1, y: 0, scale: 1, duration: 0.34, ease: 'power2.out', stagger: 0.04,
+      autoAlpha: 1, y: 0, scale: 1, duration: 1, ease: 'none',
     }, stage - 1);
     timeline.to(paths.filter(path => Number(path.dataset.stage) === stage), {
-      strokeDashoffset: 0, opacity: 0.9, duration: 0.42, ease: 'power1.out',
+      strokeDashoffset: 0, opacity: 0.9, duration: 1, ease: 'none',
     }, stage - 1);
     const packet = packets.find(item => Number(item.dataset.stage) === stage);
     if (packet) {
@@ -32,14 +33,14 @@ export function createArchitectureAnimation(root) {
         const travel = { value: 0 };
         timeline.set(packet, { autoAlpha: 1 }, stage - 1);
         timeline.to(travel, {
-          value: 1, duration: 0.46, ease: 'none',
+          value: 1, duration: 0.95, ease: 'none',
           onUpdate: () => {
             const p = path.getPointAtLength(length * travel.value);
             packet.setAttribute('cx', p.x);
             packet.setAttribute('cy', p.y);
           },
         }, stage - 1);
-        timeline.set(packet, { autoAlpha: 0 }, stage - 0.52);
+        timeline.set(packet, { autoAlpha: 0 }, stage - 0.01);
       }
     }
     timeline.addLabel(`stage${stage}`, stage);
@@ -57,7 +58,7 @@ export function createArchitectureAnimation(root) {
     }
     const time = target === 10 ? timeline.labels.complete : target === 0 ? 0 : timeline.labels[`stage${target}`];
     gsap.to(state, {
-      progress: time, duration: 0.32, ease: 'power2.out', overwrite: true,
+      progress: time, duration: MOTION_DURATION, ease: MOTION_EASE, overwrite: true,
       onUpdate: () => timeline.time(state.progress, true),
       onComplete: () => { state.progress = time; },
     });

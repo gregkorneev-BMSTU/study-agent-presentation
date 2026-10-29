@@ -32,11 +32,13 @@ try {
   browser = await chromium.launch({ ...(executablePath ? { executablePath } : {}), headless: true });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   await page.goto(`${url}/?print-pdf`, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => document.querySelectorAll('.reveal .slides > section, .reveal .slides > .pdf-page').length === 9 && document.querySelector('.reveal.ready'));
+  await page.waitForFunction(() => document.querySelectorAll('.reveal .slides > section, .reveal .slides > .pdf-page').length === 11 && document.querySelector('.reveal.ready'));
   await page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all([...document.images].map(image => image.decode().catch(() => {})));
     document.querySelector('.library-interface')?.classList.add('is-expanded');
+    const caption = document.querySelector('.arch-step-label');
+    if (caption) caption.textContent = 'Ответ сопровождается ссылками на найденные источники';
     window.deck?.layout();
   });
   await page.addStyleTag({ content: `
@@ -44,6 +46,7 @@ try {
       html.print-pdf .reveal-viewport,
       html.print-pdf .reveal { background: #e5e6e1 !important; }
       html.print-pdf .reveal .slides section {
+        top: 0 !important;
         left: 0 !important;
         width: 100% !important;
         height: 1122px !important;
@@ -61,6 +64,8 @@ try {
         line-height: 1.03 !important;
         letter-spacing: -.055em !important;
       }
+      html.print-pdf .reveal .slides section.dark-slide { background: #1c1c1e !important; }
+      html.print-pdf .reveal .slides section.dark-slide h2 { color: #f5f5f5 !important; letter-spacing: .03em !important; font-kerning: none !important; }
     }
   ` });
   await page.pdf({
@@ -73,7 +78,7 @@ try {
   });
   const pdf = await PDFDocument.load(await readFile('study-agent-presentation.pdf'));
   const pages = pdf.getPageCount();
-  if (pages !== 9) throw new Error(`Expected 9 PDF pages, got ${pages}`);
+  if (pages !== 11) throw new Error(`Expected 11 PDF pages, got ${pages}`);
   console.log(`Exported study-agent-presentation.pdf (${pages} pages)`);
 } finally {
   await browser?.close();
