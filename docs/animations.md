@@ -1,0 +1,1 @@
+Reveal.js управляет шагами через классы fragment и data-fragment-index в src/main.js. GSAP анимирует появление активного шага; при переходе между слайдами текущая анимация останавливается. При prefers-reduced-motion GSAP отключается. Стекло подключается через createLiquidGlass, CSS служит резервным оформлением.
