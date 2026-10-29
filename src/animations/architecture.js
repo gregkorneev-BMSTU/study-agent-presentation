@@ -4,7 +4,7 @@ import { MOTION_DURATION, MOTION_EASE } from './timing.js';
 export function createArchitectureAnimation(root) {
   const paths = [...root.querySelectorAll('.arch-edge')];
   const packets = [...root.querySelectorAll('.arch-packet')];
-  const nodes = [...root.querySelectorAll('[data-stage]')];
+  const nodes = [...root.querySelectorAll('.arch-node[data-stage]')];
   const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const state = { progress: 0 };
   const point = { value: 0 };
@@ -16,6 +16,7 @@ export function createArchitectureAnimation(root) {
     path.style.strokeDashoffset = `${length}`;
   });
   gsap.set(nodes, { autoAlpha: 0, y: 12, scale: 0.98 });
+  gsap.set(paths, { autoAlpha: 0 });
   gsap.set(packets, { autoAlpha: 0 });
 
   for (let stage = 1; stage <= 10; stage++) {
@@ -23,7 +24,7 @@ export function createArchitectureAnimation(root) {
       autoAlpha: 1, y: 0, scale: 1, duration: 1, ease: 'none',
     }, stage - 1);
     timeline.to(paths.filter(path => Number(path.dataset.stage) === stage), {
-      strokeDashoffset: 0, opacity: 0.9, duration: 1, ease: 'none',
+      strokeDashoffset: 0, autoAlpha: 0.9, duration: 1, ease: 'none',
     }, stage - 1);
     const packet = packets.find(item => Number(item.dataset.stage) === stage);
     if (packet) {
@@ -59,7 +60,7 @@ export function createArchitectureAnimation(root) {
     const time = target === 10 ? timeline.labels.complete : target === 0 ? 0 : timeline.labels[`stage${target}`];
     gsap.to(state, {
       progress: time, duration: MOTION_DURATION, ease: MOTION_EASE, overwrite: true,
-      onUpdate: () => timeline.time(state.progress, true),
+      onUpdate: () => timeline.time(state.progress, false),
       onComplete: () => { state.progress = time; },
     });
   }

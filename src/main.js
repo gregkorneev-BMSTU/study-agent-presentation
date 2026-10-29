@@ -12,40 +12,40 @@ import './style.css';
 const A = '/assets/';
 const icon = `<img class="icon" src="${A}icon.png" alt="Study Agent">`;
 const note = '<aside class="notes">Короткая техническая заметка. Полный текст выступления можно добавить позже.</aside>';
-const section = (n, k, title, body, className = '') => `<section class="${className}"><div class="eyebrow">STUDY AGENT <span>${k}</span></div><h2>${title}</h2>${body}<div class="page">${String(n).padStart(2, '0')} / 11</div>${note}</section>`;
+const section = (n, k, title, body, className = '', contentClass = '') => `<section class="${className}"><div class="eyebrow">STUDY AGENT <span>${k}</span></div>${contentClass ? `<div class="${contentClass}">` : ''}<h2>${title}</h2>${body}${contentClass ? '</div>' : ''}<div class="page">${String(n).padStart(2, '0')} / 11</div>${note}</section>`;
 const card = (label, sub, idx) => `<div class="card glass-card fragment" data-fragment-index="${idx}"><strong>${label}</strong><small>${sub}</small></div>`;
 
 const archNode = (stage, x, y, title, detail, iconText, extra = '') => {
   const lines = Array.isArray(detail) ? detail : [detail];
-  return `<g transform="translate(${x} ${y})"><g class="arch-node glass-node" data-stage="${stage}"><rect width="260" height="110" rx="22"/><text class="node-icon" x="20" y="38">${iconText}</text><text class="node-title" x="54" y="${lines.length > 2 ? 36 : 41}">${title}</text>${lines.map((line, i) => `<text class="node-detail" x="20" y="${(lines.length > 2 ? 60 : 76) + i * 20}">${line}</text>`).join('')}${extra}</g></g>`;
+  return `<g transform="translate(${x} ${y})"><g class="arch-node glass-node" data-stage="${stage}"><rect width="285" height="120" rx="22"/><text class="node-icon" x="20" y="38">${iconText}</text><text class="node-title" x="54" y="${lines.length > 2 ? 36 : 41}">${title}</text>${lines.map((line, i) => `<text class="node-detail" x="20" y="${(lines.length > 2 ? 64 : 77) + i * 22}">${line}</text>`).join('')}${extra}</g></g>`;
 };
 const edge = (id, stage, d, label = '') => `<path id="${id}" class="arch-edge" data-stage="${stage}" d="${d}" marker-end="url(#arrow)"/>${label}`;
 const packet = (stage, path) => `<circle class="arch-packet" data-stage="${stage}" data-path="${path}" r="7"/>`;
 const architecture = `<div class="architecture" data-architecture>
   <div class="arch-phase-head"><span><i>01</i> Подготовка материалов</span><span><i>02</i> Поиск и ответ</span></div>
-  <svg class="arch-svg" viewBox="0 0 1720 500" role="img" aria-label="Схема подготовки учебных материалов и поиска с локальной генерацией ответа">
-    <defs><linearGradient id="nodeFill" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".98"/><stop offset="1" stop-color="#e5e6e1" stop-opacity=".58"/></linearGradient><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="20" refX="24" refY="10" orient="auto"><path d="M1 1 L24 10 L1 19"/></marker></defs>
-    ${edge('e-doc-extract', 2, 'M290 115 H350')}
-    ${edge('e-extract-chunk', 4, 'M610 115 H670')}
-    ${edge('e-extract-ocr', 3, 'M480 170 V230')}
-    ${edge('e-ocr-chunk', 4, 'M610 285 H628 Q640 285 640 273 V212 Q640 200 652 200 H690 Q710 200 710 180 V170')}
-    ${edge('e-chunk-db', 5, 'M930 115 H990')}
-    ${edge('e-chunk-embed', 6, 'M850 170 V230')}
-    ${edge('e-query-retrieve', 7, 'M290 415 H350')}
-    ${edge('e-retrieve-context', 8, 'M610 415 H670')}
-    ${edge('e-context-llm', 9, 'M930 415 H990')}
-    ${edge('e-llm-answer', 10, 'M1250 415 H1330')}
-    ${archNode(1, 30, 60, 'Материалы', 'PDF · DOCX · MD · TXT', '▤')}
-    ${archNode(2, 350, 60, 'Извлечение', ['цифровой текст', 'и структура'], '◉')}
-    ${archNode(3, 350, 230, 'Chandra OCR', 'сканы · фото · рукопись', '⌕', '<text class="node-tag" x="20" y="103">НЕОБЯЗАТЕЛЬНО</text>')}
-    ${archNode(4, 670, 60, 'Фрагменты', ['текстовые блоки', '+ метаданные'], '≡')}
-    ${archNode(5, 990, 60, 'SQLite + FTS5', ['локальный текстовый', 'индекс'], '▦')}
-    ${archNode(6, 720, 230, 'Эмбеддинги', ['для семантического', 'поиска'], '◈')}
-    ${archNode(7, 30, 360, 'Вопрос', 'запрос пользователя', '?')}
-    <g transform="translate(350 360)"><g class="arch-node arch-retrieval" data-stage="8"><rect width="260" height="110" rx="22"/><text class="node-icon" x="20" y="38">⌕</text><text class="node-title" x="54" y="36">Режим поиска</text><text class="node-detail" x="20" y="60">Лексический,</text><text class="node-detail" x="20" y="80">семантический</text><text class="node-detail" x="20" y="100">или гибридный</text></g></g>
-    ${archNode(8, 670, 360, 'Контекст', 'подходящие фрагменты', '▧')}
-    ${archNode(9, 990, 360, 'Ollama', ['локальная языковая', 'модель'], '✦')}
-    ${archNode(10, 1330, 360, 'Ответ + источники', ['ссылки на', 'использованные', 'фрагменты'], '↗')}
+  <svg class="arch-svg" viewBox="0 20 1540 500" role="img" aria-label="Схема подготовки учебных материалов и поиска с локальной генерацией ответа">
+    <defs><linearGradient id="nodeFill" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".98"/><stop offset="1" stop-color="#e5e6e1" stop-opacity=".58"/></linearGradient><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="15" refY="8" orient="auto"><path d="M1 1 L15 8 L1 15"/></marker></defs>
+    ${edge('e-doc-extract', 2, 'M300 100 H320')}
+    ${edge('e-extract-chunk', 4, 'M605 100 H625')}
+    ${edge('e-extract-ocr', 3, 'M462.5 160 V215')}
+    ${edge('e-ocr-chunk', 4, 'M605 275 H609 Q615 275 615 268 V175 Q615 165 625 165 H690 Q700 165 700 160')}
+    ${edge('e-chunk-db', 5, 'M910 100 H930')}
+    ${edge('e-chunk-embed', 6, 'M767.5 160 V215')}
+    ${edge('e-query-retrieve', 7, 'M300 450 H320')}
+    ${edge('e-retrieve-context', 8, 'M605 450 H625')}
+    ${edge('e-context-llm', 9, 'M910 450 H930')}
+    ${edge('e-llm-answer', 10, 'M1215 450 H1235')}
+    ${archNode(1, 15, 40, 'Материалы', 'PDF · DOCX · MD · TXT', '▤')}
+    ${archNode(2, 320, 40, 'Извлечение', ['цифровой текст', 'и структура'], '◉')}
+    ${archNode(3, 320, 215, 'Chandra OCR', 'сканы · фото · рукопись', '⌕', '<text class="node-tag" x="20" y="113">НЕОБЯЗАТЕЛЬНО</text>')}
+    ${archNode(4, 625, 40, 'Фрагменты', ['текстовые блоки', '+ метаданные'], '≡')}
+    ${archNode(5, 930, 40, 'SQLite + FTS5', ['локальный текстовый', 'индекс'], '▦')}
+    ${archNode(6, 625, 215, 'Эмбеддинги', ['для семантического', 'поиска'], '◈')}
+    ${archNode(7, 15, 390, 'Вопрос', 'запрос пользователя', '?')}
+    <g transform="translate(320 390)"><g class="arch-node arch-retrieval" data-stage="8"><rect width="285" height="120" rx="22"/><text class="node-icon" x="20" y="38">⌕</text><text class="node-title" x="54" y="36">Режим поиска</text><text class="node-detail" x="20" y="64">Лексический,</text><text class="node-detail" x="20" y="86">семантический</text><text class="node-detail" x="20" y="108">или гибридный</text></g></g>
+    ${archNode(8, 625, 390, 'Контекст', 'подходящие фрагменты', '▧')}
+    ${archNode(9, 930, 390, 'Ollama', ['локальная языковая', 'модель'], '✦')}
+    ${archNode(10, 1235, 390, 'Ответ + источники', ['ссылки на', 'использованные', 'фрагменты'], '↗')}
     ${packet(2, 'e-doc-extract')}${packet(3, 'e-extract-ocr')}${packet(4, 'e-extract-chunk')}${packet(5, 'e-chunk-db')}${packet(6, 'e-chunk-embed')}${packet(7, 'e-query-retrieve')}${packet(8, 'e-retrieve-context')}${packet(9, 'e-context-llm')}${packet(10, 'e-llm-answer')}
   </svg>
   <div class="arch-runtime"><span>Индекс материалов: Python · SQLite</span><b>JSON Lines</b><span>Приложение macOS: SwiftUI</span></div>
@@ -58,9 +58,9 @@ document.querySelector('#slides').innerHTML = `
 ${section(2, 'ЛЮДИ', 'Команда разработки', `<p class="lead">Участники проекта</p><div class="team-grid">${team.map(p => `<div class="card glass-card team-member"><img class="team-avatar" src="${A}${p.avatar}" alt="Аватар: ${p.fullName}"><div class="team-info"><strong>${p.fullName}</strong><small>@${p.github}<br>Группа: ${p.academicGroup}<br>Роль: ${p.github === 'gregkorneev' ? p.role.replace(', ', ',<br>') : p.role}</small></div></div>`).join('')}</div>`)}
 ${section(3, 'ЗАДАЧА', 'Учебные материалы есть.<br><em>Найти нужное — сложно.</em>', `<div class="problem"><div class="file-cloud">${['PDF', 'DOCX', 'MD', 'TXT', 'Изображения'].map(x => `<div class="file glass-pill">${x}</div>`).join('')}</div><div class="problem-arrow fragment" data-fragment-index="1">→</div><div class="solution glass-spotlight fragment" data-fragment-index="1">${icon}<strong>Единая локальная библиотека</strong><small>Материалы из разных папок</small></div></div><p class="conclusion fragment" data-fragment-index="1">Поиск по тексту и смыслу. Ответы — по найденным материалам.</p><p class="footnote">Источники помогают проверить ответ, но не гарантируют фактическую истинность текста модели.</p>`)}
 ${section(4, 'АРХИТЕКТУРА', 'От документа к ответу', architecture)}
-${section(5, 'СТЕК', 'Технологический стек', `<div class="tech-layout"><div class="tech-center glass-hero">${icon}<strong>Study Agent</strong></div><div class="tech-grid">${[['Python','Локальный backend'],['SQLite · FTS5','Локальный индекс'],['Embeddings','Семантический поиск'],['Ollama','Локальная LLM'],['Chandra OCR','Распознавание по настройке'],['SwiftUI','Поддерживаемое приложение macOS'],['WinUI 3','Beta 6.1 · предварительная версия'],['GitHub Actions','Автоматизированные проверки']].map((x,i)=>card(x[0],x[1],i)).join('')}</div></div>`)}
+${section(5, 'СТЕК', 'Технологический стек', `<div class="tech-layout"><div class="tech-center glass-hero">${icon}<strong>Study Agent</strong></div><div class="tech-grid">${[['Python','Локальный backend'],['SQLite · FTS5','Локальный индекс'],['Embeddings','Семантический поиск'],['Ollama','Локальная LLM'],['Chandra OCR','Распознавание по настройке'],['SwiftUI','Поддерживаемое приложение macOS'],['WinUI 3','Beta 6.1 · предварительная версия'],['GitHub Actions','Автоматизированные проверки']].map((x,i)=>card(x[0],x[1],i)).join('')}</div></div>`, 'tech-slide', 'tech-content')}
 ${section(6, 'РАЗРАБОТКА', 'От концепции к работающему приложению', `<div class="timeline">${['Основа и интерфейс','SA-01<br>Индекс','SA-02<br>DOCX / OCR','SA-03<br>Поиск / RAG','SA-04<br>Источники','SA-05 / SA-06<br>Windows / релизы'].map((x,i)=>`<div class="milestone fragment" data-fragment-index="${i}"><i></i><strong>${x}</strong></div>`).join('')}</div><div class="challenges">${[['PDF и OCR','Chandra подключается отдельно и распознаёт визуальный текст при необходимости.'],['Инкрементальная индексация','Неизменённые документы не извлекаются повторно при синхронизации.'],['Проверяемые источники','Ссылки строятся по метаданным найденных фрагментов; модель может ошибаться.'],['Упаковка','Python backend и нативный интерфейс интегрируются отдельно для платформ.']].map((x,i)=>card(x[0],x[1],i+2)).join('')}</div>`)}
-${section(7, 'ИНТЕРФЕЙС', 'Перейдём к реализации', `<div class="welcome-stage"><img class="welcome-frame" src="${A}welcome-1.png" alt="Приветствие Study Agent"><img class="welcome-frame fragment" data-fragment-index="0" src="${A}welcome-2.png" alt="Знакомство с учебными материалами"><img class="welcome-frame fragment" data-fragment-index="1" src="${A}welcome-3.png" alt="Знакомство с локальной обработкой"></div>`, 'welcome-slide')}
+${section(7, 'ИНТЕРФЕЙС', 'macOS приложение', `<div class="welcome-stage"><img class="welcome-frame" src="${A}welcome-1.png" alt="Приветствие Study Agent"><img class="welcome-frame fragment" data-fragment-index="0" src="${A}welcome-2.png" alt="Знакомство с учебными материалами"><img class="welcome-frame fragment" data-fragment-index="1" src="${A}welcome-3.png" alt="Знакомство с локальной обработкой"></div>`, 'welcome-slide')}
 ${section(8, 'ИНТЕРФЕЙС', 'Библиотека учебных материалов', `<div class="interface library-interface"><div class="screen glass-spotlight"><img src="${A}macos-beta-6.1-library.png" alt="Настоящий экран библиотеки Study Agent"></div><div class="callouts">${[['01','Подключение папок'],['02','Прогресс индексации'],['03','Документы и фрагменты'],['04','Статусы и предупреждения']].map((x,i)=>`<div class="callout fragment" data-fragment-index="${i}"><b>${x[0]}</b> ${x[1]}</div>`).join('')}</div><div class="settings-screen glass-card fragment" data-fragment-index="4"><img src="${A}macos-beta-6.1-settings.png" alt="Настройки Study Agent"><small>Локальная модель и OCR</small></div></div>`)}
 ${section(9, 'ИНТЕРФЕЙС', 'От вопроса к ответу по источникам', `<div class="interface search-interface"><div class="screen glass-spotlight"><img src="${A}macos-beta-6.1-search.png" alt="Настоящий экран поиска Study Agent"></div><div class="callouts">${[['01','Раздел «Поиск»'],['02','Поле вопроса'],['03','Кнопка запуска запроса']].map((x,i)=>`<div class="callout fragment" data-fragment-index="${i}"><b>${x[0]}</b> ${x[1]}</div>`).join('')}<p class="workflow-note">После запроса приложение показывает найденные фрагменты и ответ локальной модели.</p><p class="footnote">На снимке — начальное состояние до запроса. Поиск доступен и без генерации; модель может ошибаться.</p></div></div>`)}
 ${section(10, 'ИНТЕРФЕЙС', 'Тёмная тема', `<div class="dark-screens"><figure><img src="${A}macos-dark-library.png" alt="Библиотека Study Agent в тёмной теме"><figcaption>Библиотека</figcaption></figure><figure><img src="${A}macos-dark-search.png" alt="Поиск Study Agent в тёмной теме"><figcaption>Поиск по материалам</figcaption></figure></div>`, 'dark-slide')}

@@ -58,6 +58,9 @@ html,body{background:#080d18}
 .arch-triggers{position:absolute;width:1px;height:1px;overflow:hidden}
 .arch-triggers .fragment{width:1px;height:1px;pointer-events:none}
 .tech-layout{display:flex;align-items:center;gap:52px;margin-top:38px}
+.tech-slide .tech-content{position:absolute;left:100px;right:100px;top:50%;transform:translateY(-50%)}
+.tech-slide .tech-content h2{text-align:center}
+@media print{.tech-slide .card,.tech-slide .tech-center{box-shadow:none!important}.tech-slide .lg-layer,.tech-slide .lg-sheen{display:none!important}}
 .tech-center{width:280px;text-align:center;font-size:27px;padding:35px 20px}
 .tech-center .icon{width:160px}
 .tech-center strong{display:block}
@@ -254,9 +257,11 @@ html,body,.reveal,.reveal .slides section{background:#e5e6e1}
 .reveal .welcome-stage .welcome-frame.fragment.visible{opacity:1}
 @media print{.reveal .welcome-stage .welcome-frame.fragment{opacity:1!important;visibility:visible!important}}
 .architecture .arch-phase-head{font-size:22px}
-.architecture .node-title{font-size:22px}
-.architecture .node-detail{font-size:19px}
-.architecture .node-tag{font-size:11px}
+.architecture{margin-top:48px}
+.architecture .arch-svg{width:100%;height:auto;aspect-ratio:1540/500}
+.architecture .node-title{font-size:24px}
+.architecture .node-detail{font-size:21px}
+.architecture .node-tag{font-size:12px}
 .architecture .arch-runtime,.architecture .arch-runtime b{font-size:21px}
 .architecture .arch-step-label{font-size:23px}
 .tech-grid .card strong,.challenges .card strong{font-size:30px;line-height:1.2}
